@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Intercom</string>
+    <string name="hello_str">Здравствуйте! \n Благодарим за выбор нашего приложения. \n Давайте начнем первоначальную настройку домофона</string>
+    <string name="go_str"><![CDATA[Вперед =>]]></string>
 </resources>
