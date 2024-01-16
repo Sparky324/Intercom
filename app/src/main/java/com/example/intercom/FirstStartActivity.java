@@ -21,14 +21,14 @@ public class FirstStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_start);
 
-        sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("inter_data", Context.MODE_PRIVATE);
         Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
         ArrayList<String> items = new ArrayList<>(set);
 
         if (!items.isEmpty()) {
             Intent intent = new Intent(FirstStartActivity.this, InfoActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }
     }
 
