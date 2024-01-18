@@ -25,11 +25,11 @@ public class FirstStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_start);
 
-        //if (!isNetworkConnected()) {
-        //    Intent intent = new Intent(FirstStartActivity.this, NoConnetionActivity.class);
-        //    startActivity(intent);
-        //    finish();
-        //}
+        if (!isOnline()) {
+            Intent intent = new Intent(FirstStartActivity.this, NoConnetionActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         sharedPreferences = this.getSharedPreferences("inter_data", Context.MODE_PRIVATE);
         Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
@@ -47,4 +47,10 @@ public class FirstStartActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 }
