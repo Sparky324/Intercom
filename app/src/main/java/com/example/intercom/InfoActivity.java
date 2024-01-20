@@ -23,12 +23,10 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
-        ArrayList<String> items = new ArrayList<>(set);
 
         TextView model = (TextView)findViewById(R.id.text_intercom_model);
 
-        model.setText(items.get(2));
+        model.setText(sharedPreferences.getString("model", ""));
 
     }
 

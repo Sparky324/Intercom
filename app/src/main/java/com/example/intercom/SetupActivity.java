@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
@@ -32,9 +33,10 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
+        StrictMode.ThreadPolicy gfgPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(gfgPolicy);
+
         sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
-        ArrayList<String> items = new ArrayList<>(set);
 
         EditText editText = (EditText)findViewById(R.id.input_house);
         EditText editText1 = (EditText)findViewById(R.id.input_flat);
@@ -45,19 +47,12 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
         editText.addTextChangedListener(this);
         editText1.addTextChangedListener(this);
 
-        if (items.isEmpty()) {
-            editText.setText("Введите номер дома");
-            editText1.setText("Введите номер квартиры");
-        } else {
-            editText.setText(items.get(1));
-            editText1.setText(items.get(0));
-        }
+        editText.setText(sharedPreferences.getString("house", ""));
+        editText1.setText(sharedPreferences.getString("flat", ""));
     }
 
     public void onSaveClc(View view) throws IOException {
         sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
-        ArrayList<String> items = new ArrayList<>(set);
 
         EditText editText = (EditText)findViewById(R.id.input_house);
         EditText editText1 = (EditText)findViewById(R.id.input_flat);
@@ -65,24 +60,33 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
         String txt = editText.getText().toString();
         String txt1 = editText1.getText().toString();
 
-        HttpURLConnection conn = null;
-        URL object = new URL("http://89.208.220.227:82/info");
-        conn = (HttpURLConnection) object.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("flat", txt1);
-        conn.setRequestProperty("hose", txt);
-        InputStream inputStream = conn.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line = bufferedReader.readLine();
+        URL url = new URL("http://89.208.220.227:82/info");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        items.add(txt);
-        items.add(txt1);
-        items.add(line);
+        conn.setRequestProperty("accept", "application/json");
+        conn.setRequestProperty("flat", txt1);
+        conn.setRequestProperty("house", txt);
+
+        // Request not successful
+        if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            throw new RuntimeException("Request Failed. HTTP Error Code: " + conn.getResponseCode());
+        }
+
+        // Read response
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuffer jsonString = new StringBuffer();
+        String line;
+        while ((line = br.readLine()) != null) {
+            jsonString.append(line);
+        }
+        line = jsonString.substring(10, 33);
+        br.close();
+        conn.disconnect();
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        Set<String> set1 = new HashSet<>(items);
-        editor.putStringSet("items", set1);
+        editor.putString("flat", txt1);
+        editor.putString("house", txt);
+        editor.putString("model", line);
         editor.apply();
 
         Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
