@@ -67,12 +67,10 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
         conn.setRequestProperty("flat", txt1);
         conn.setRequestProperty("house", txt);
 
-        // Request not successful
         if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
             throw new RuntimeException("Request Failed. HTTP Error Code: " + conn.getResponseCode());
         }
 
-        // Read response
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuffer jsonString = new StringBuffer();
         String line;

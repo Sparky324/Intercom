@@ -99,7 +99,7 @@
         app:srcCompat="@android:drawable/ic_menu_recent_history" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_intercom"
         android:layout_width="299dp"
         android:layout_height="285dp"
         android:layout_marginStart="32dp"
