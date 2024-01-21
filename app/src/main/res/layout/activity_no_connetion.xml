@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_retry"
+        android:id="@+id/button_take_photo"
         android:layout_width="121dp"
         android:layout_height="109dp"
         android:layout_marginStart="145dp"
