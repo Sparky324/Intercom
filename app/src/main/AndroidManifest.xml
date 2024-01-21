@@ -21,9 +21,6 @@
             android:name=".HistActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
-        <activity
             android:name=".NoConnetionActivity"
             android:exported="false" />
         <activity
