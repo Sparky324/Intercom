@@ -32,10 +32,8 @@ public class FirstStartActivity extends AppCompatActivity {
         }
 
         sharedPreferences = this.getSharedPreferences("inter_data", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("items", new HashSet<>());
-        ArrayList<String> items = new ArrayList<>(set);
 
-        if (!items.isEmpty()) {
+        if (!sharedPreferences.getString("flat", "").isEmpty()) {
             Intent intent = new Intent(FirstStartActivity.this, InfoActivity.class);
             startActivity(intent);
             finish();
