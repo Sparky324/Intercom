@@ -14,6 +14,7 @@ import android.view.View;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class FirstStartActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class FirstStartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_start);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         if (!isOnline()) {
             Intent intent = new Intent(FirstStartActivity.this, NoConnetionActivity.class);

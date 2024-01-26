@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/callTime"
         android:layout_width="36dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/callStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
