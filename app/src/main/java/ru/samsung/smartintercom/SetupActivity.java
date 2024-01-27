@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,17 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import ru.samsung.smartintercom.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class SetupActivity extends AppCompatActivity implements android.text.TextWatcher {
 
@@ -54,44 +51,49 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
     }
 
     public void onSaveClc(View view) throws IOException {
-        sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
+        try {
+            sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
 
-        EditText editText = (EditText)findViewById(R.id.input_house);
-        EditText editText1 = (EditText)findViewById(R.id.input_flat);
+            EditText editText = (EditText) findViewById(R.id.input_house);
+            EditText editText1 = (EditText) findViewById(R.id.input_flat);
 
-        String txt = editText.getText().toString();
-        String txt1 = editText1.getText().toString();
+            String txt = editText.getText().toString();
+            String txt1 = editText1.getText().toString();
 
-        URL url = new URL("http://89.208.220.227:82/info");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            URL url = new URL("http://89.208.220.227:82/info");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setRequestProperty("accept", "application/json");
-        conn.setRequestProperty("flat", txt1);
-        conn.setRequestProperty("house", txt);
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("flat", txt1);
+            conn.setRequestProperty("house", txt);
 
-        if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-            throw new RuntimeException("Request Failed. HTTP Error Code: " + conn.getResponseCode());
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Request Failed. HTTP Error Code: " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuffer jsonString = new StringBuffer();
+            String line;
+            while ((line = br.readLine()) != null) {
+                jsonString.append(line);
+            }
+            line = jsonString.substring(10, 33);
+            br.close();
+            conn.disconnect();
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("flat", txt1);
+            editor.putString("house", txt);
+            editor.putString("model", line);
+            editor.apply();
+
+            Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (RuntimeException e) {
+            Toast.makeText(SetupActivity.this, "Что-то пошло не так. \n Проверьте номер дома и квартиры", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        StringBuffer jsonString = new StringBuffer();
-        String line;
-        while ((line = br.readLine()) != null) {
-            jsonString.append(line);
-        }
-        line = jsonString.substring(10, 33);
-        br.close();
-        conn.disconnect();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("flat", txt1);
-        editor.putString("house", txt);
-        editor.putString("model", line);
-        editor.apply();
-
-        Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     public void onExitClc(View view) {

@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import ru.samsung.smartintercom.R;
+
 import java.util.Objects;
+
+import ru.samsung.smartintercom.InfoActivity;
+import ru.samsung.smartintercom.NoConnetionActivity;
+import ru.samsung.smartintercom.SetupActivity;
 
 public class MainActivity extends AppCompatActivity {
 

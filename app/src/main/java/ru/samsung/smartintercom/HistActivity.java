@@ -1,13 +1,14 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
+
+import ru.samsung.smartintercom.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import ru.samsung.smartintercom.R;
+
 import java.util.Objects;
+
+import ru.samsung.smartintercom.ui.activity.MainActivity;
 
 public class NoConnetionActivity extends AppCompatActivity {
 

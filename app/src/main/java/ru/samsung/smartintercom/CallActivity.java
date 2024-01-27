@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,16 +9,15 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
 
+import ru.samsung.smartintercom.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;

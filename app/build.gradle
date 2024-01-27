@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.intercom'
+    namespace "ru.samsung.smartintercom"
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.intercom"
+        applicationId "ru.samsung.smartintercom"
         minSdk 29
         targetSdk 34
         versionCode 1

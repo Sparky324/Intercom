@@ -2,4 +2,14 @@
     <string name="app_name">Intercom</string>
     <string name="hello_str">Здравствуйте! \n Благодарим за выбор нашего приложения. \n Давайте начнем первоначальную настройку домофона</string>
     <string name="go_str"><![CDATA[Вперед =>]]></string>
+    <string name="call_story">История вызовов</string>
+    <string name="your_inter">Ваш домофон</string>
+    <string name="model_n">Модель домофона:</string>
+    <string name="photo_int">Фото с домофона:</string>
+    <string name="no_conn">Нет подключения к интернету. \n Проверьте интернет-соединение и повторите попытку.</string>
+    <string name="fill_plains">Заполните поля ниже для входа в приложение или изменения настроек</string>
+    <string name="house_n">Номер дома:</string>
+    <string name="flat_n">Номер квартиры:</string>
+    <string name="save_txt">Сохранить</string>
+    <string name="back_txt">Назад</string>
 </resources>

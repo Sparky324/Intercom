@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import ru.samsung.smartintercom.R;
 
 import java.util.ArrayList;
 

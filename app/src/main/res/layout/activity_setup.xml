@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetupActivity">
+    tools:context="ru.samsung.smartintercom.SetupActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -13,7 +13,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="112dp"
         android:layout_marginEnd="12dp"
-        android:text="Заполните поля ниже для входа в приложение или изменения настроек"
+        android:text="@string/fill_plains"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="148dp"
-        android:text="Номер дома:"
+        android:text="@string/house_n"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/input_house"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="62dp"
-        android:text="Номер квартиры:"
+        android:text="@string/flat_n"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/input_flat"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         android:layout_marginEnd="143dp"
         android:layout_marginBottom="168dp"
         android:onClick="onSaveClc"
-        android:text="Сохранить"
+        android:text="@string/save_txt"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:onClick="onExitClc"
-        android:text="Назад"
+        android:text="@string/back_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

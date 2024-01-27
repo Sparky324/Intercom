@@ -1,4 +1,4 @@
-package com.example.intercom;
+package ru.samsung.smartintercom;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
