@@ -2,7 +2,6 @@ package com.example.intercom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,24 +10,20 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-public class FirstStartActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_start);
+        setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         if (!isOnline()) {
-            Intent intent = new Intent(FirstStartActivity.this, NoConnetionActivity.class);
+            Intent intent = new Intent(MainActivity.this, NoConnetionActivity.class);
             startActivity(intent);
             finish();
         }
@@ -36,14 +31,14 @@ public class FirstStartActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("inter_data", Context.MODE_PRIVATE);
 
         if (!sharedPreferences.getString("flat", "").isEmpty()) {
-            Intent intent = new Intent(FirstStartActivity.this, InfoActivity.class);
+            Intent intent = new Intent(MainActivity.this, InfoActivity.class);
             startActivity(intent);
             finish();
         }
     }
 
     public void onLetsClc(View view) {
-        Intent intent = new Intent(FirstStartActivity.this, SetupActivity.class);
+        Intent intent = new Intent(MainActivity.this, SetupActivity.class);
         startActivity(intent);
     }
 

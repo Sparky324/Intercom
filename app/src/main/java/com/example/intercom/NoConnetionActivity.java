@@ -18,7 +18,7 @@ public class NoConnetionActivity extends AppCompatActivity {
     }
 
     public void onRetryClc(View view) {
-        Intent intent = new Intent(NoConnetionActivity.this, FirstStartActivity.class);
+        Intent intent = new Intent(NoConnetionActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
