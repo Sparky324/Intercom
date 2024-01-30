@@ -8,7 +8,6 @@ import androidx.room.Room;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.samsung.smartintercom.R;
 
 import java.util.ArrayList;
 import java.util.List;

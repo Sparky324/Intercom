@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.samsung.smartintercom.R;
 
 import java.util.Objects;
 
