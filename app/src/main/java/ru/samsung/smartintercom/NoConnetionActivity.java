@@ -2,9 +2,13 @@ package ru.samsung.smartintercom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 
 import java.util.Objects;
@@ -21,9 +25,20 @@ public class NoConnetionActivity extends AppCompatActivity {
     }
 
     public void onRetryClc(View view) {
-        Intent intent = new Intent(NoConnetionActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        if (!isOnline()) {
+            Toast.makeText(NoConnetionActivity.this, "Подключения нет, попробуйте позже или проверьте связь.", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(NoConnetionActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     public void onHistClc(View view) {

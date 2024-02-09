@@ -25,6 +25,7 @@ import java.util.Objects;
 public class SetupActivity extends AppCompatActivity implements android.text.TextWatcher {
 
     SharedPreferences sharedPreferences;
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,12 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
             while ((line = br.readLine()) != null) {
                 jsonString.append(line);
             }
-            line = jsonString.substring(10, 33);
+            line = jsonString.toString();
+            line = line.replace("\"", "");
+            line = line.replace("model", "");
+            line = line.replace(":", "");
+            line = line.replace("{", "");
+            line = line.replace("}", "");
             br.close();
             conn.disconnect();
 
@@ -87,18 +93,43 @@ public class SetupActivity extends AppCompatActivity implements android.text.Tex
             editor.putString("model", line);
             editor.apply();
 
-            Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
-            startActivity(intent);
-            finish();
+            Toast.makeText(SetupActivity.this, "Настройки успешно изменены, Вы можете вернуться обратно", Toast.LENGTH_LONG).show();
+
+            Button button = (Button)findViewById(R.id.button_save);
+            button.setEnabled(false);
+            flag = true;
         } catch (RuntimeException e) {
             Toast.makeText(SetupActivity.this, "Что-то пошло не так. \n Проверьте номер дома и квартиры", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        } catch (IOException e) {
+            Intent intent = new Intent(SetupActivity.this, NoConnetionActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
     public void onExitClc(View view) {
-        finish();
+        if (flag) {
+            Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
+            finishAffinity();
+            startActivity(intent);
+        } else {
+            finish();
+        }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (flag) {
+            Intent intent = new Intent(SetupActivity.this, InfoActivity.class);
+            finishAffinity();
+            startActivity(intent);
+        } else {
+            finish();
+        }
+    }
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -8,10 +8,14 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 
 import ru.samsung.smartintercom.R;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 import ru.samsung.smartintercom.InfoActivity;
@@ -27,12 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-        if (!isOnline()) {
-            Intent intent = new Intent(MainActivity.this, NoConnetionActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        StrictMode.ThreadPolicy gfgPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(gfgPolicy);
 
         sharedPreferences = this.getSharedPreferences("inter_data", Context.MODE_PRIVATE);
 
@@ -46,12 +46,5 @@ public class MainActivity extends AppCompatActivity {
     public void onLetsClc(View view) {
         Intent intent = new Intent(MainActivity.this, SetupActivity.class);
         startActivity(intent);
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

@@ -7,7 +7,6 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.samsung.smartintercom.Call;
 
 @Dao
 public interface CallDAO {

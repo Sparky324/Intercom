@@ -12,6 +12,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.samsung.smartintercom.R;
 
@@ -42,9 +43,6 @@ public class InfoActivity extends AppCompatActivity {
         TextView model = (TextView)findViewById(R.id.text_intercom_model);
 
         model.setText(sharedPreferences.getString("model", ""));
-
-        getImage();
-
     }
 
     public void onSettClc(View view) {
@@ -53,7 +51,49 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     public void onRetryClc(View view) {
+        sharedPreferences = getSharedPreferences("inter_data", Context.MODE_PRIVATE);
 
+        URL url = null;
+        try {
+            url = new URL("http://89.208.220.227:82/info");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("flat", sharedPreferences.getString("flat", ""));
+            conn.setRequestProperty("house", sharedPreferences.getString("house", ""));
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Request Failed. HTTP Error Code: " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuffer jsonString = new StringBuffer();
+            String line;
+            while ((line = br.readLine()) != null) {
+                jsonString.append(line);
+            }
+            line = jsonString.toString();
+            line = line.replace("\"", "");
+            line = line.replace("model", "");
+            line = line.replace(":", "");
+            line = line.replace("{", "");
+            line = line.replace("}", "");
+            br.close();
+            conn.disconnect();
+
+            TextView model = (TextView)findViewById(R.id.text_intercom_model);
+            model.setText(line);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("model", line);
+            editor.apply();
+        } catch (IOException e) {
+            Intent intent = new Intent(InfoActivity.this, NoConnetionActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (RuntimeException e) {
+            Toast.makeText(InfoActivity.this, "Что-то пошло не так. \n Проверьте номер дома и квартиры", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
     public void onRetryImageClc(View view) {
@@ -86,7 +126,9 @@ public class InfoActivity extends AppCompatActivity {
             instream.close();
             conn1.disconnect();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Intent intent = new Intent(InfoActivity.this, NoConnetionActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
